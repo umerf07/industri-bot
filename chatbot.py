@@ -5,6 +5,8 @@ print("Welcome to my own personal Chatbot!")
 # Chatbot Asking the question
 ask = input("Do you have anything to request?: (y/n): ")
 
+inventory = []
+
 # Options to choose for questioning
 while True:
     def question():
