@@ -1,3 +1,5 @@
+import smtplib
+
 print("Welcome to my own personal Chatbot!")
 
 # Chatbot Asking the question
