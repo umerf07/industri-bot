@@ -14,8 +14,20 @@ while True:
             options = input("What would you like help in?:\n 1. Add or Remove Inventory,\n 2. Request supplies to be sent over to a specific location,\n 3. If low on stock I can send a message to the manager to let him know,\n 4. Track incoming shipments: \n ")
             # Inventory view or changes
             if options == "1":
-                inventory = input("What would you like to add?: ")
-                print(inventory)
+                def add_remove():
+                    add_item = input("What would you like to add? (or type 'done'): ")
+                    while True:
+                        quantity = int(input(f"Type in how much would you like to add of the {add_item}?: "))
+                        if quantity < 0:
+                            print("We don't need a number less than zero please try again")
+                        else:
+                            break
+                    if add_item in inventory:
+                        inventory[add_item] += quantity
+                    else:
+                        inventory[add_item] = quantity
+                        inventory.append()
+                
             # Requesting supplies to a specific location
             elif options == "2":
                 message = input("Where do you want to send the supplies and where to?: ")
@@ -27,8 +39,8 @@ while True:
             elif options == "4":
                 shipment_update = input("How far is the shipment to the site?: ")
                 print(shipment_update)
-        else:
-            print("Invalid")
+            else:
+                print("Invalid")
 
     question()
 
