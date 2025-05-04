@@ -26,7 +26,7 @@ while True:
                         inventory[add_item] += quantity
                     else:
                         inventory[add_item] = quantity
-                        inventory.append()
+                        inventory.append({"name": add_item, "quantity": quantity})
                 
             # Requesting supplies to a specific location
             elif options == "2":
