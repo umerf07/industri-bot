@@ -1,6 +1,6 @@
 import smtplib
 
-print("Welcome to my own personal Chatbot!")
+print("Welcome to Inventory Management Chatbot!")
 
 # Chatbot Asking the question
 ask = input("Do you have anything to request?: (y/n): ")
@@ -11,16 +11,19 @@ inventory = {}
 while True:
     def question():
         if ask == "y":
-            options = input("What would you like help in?:\n 1. Add or Track Inventory,\n 2. Request supplies to be sent over to a specific location,\n 3. If low on stock I can send a message to the manager to let him know,\n 4. Track incoming shipments: \n ")
+            options = input("What would you like help in?:\n 1. Add or Remove Inventory,\n 2. Request supplies to be sent over to a specific location,\n 3. If low on stock I can send a message to the manager to let him know,\n 4. Track incoming shipments: \n ")
             # Inventory view or changes
             if options == "1":
                 inventory = input("What would you like to add?: ")
                 print(inventory)
+            # Requesting supplies to a specific location
             elif options == "2":
                 message = input("Where do you want to send the supplies and where to?: ")
                 print(message)
+            # Low on Stock
             elif options == "3":
                 print("We're low on stock please contact the supply manager immediately!...")
+            # Tracking ongoing shipment vice versa
             elif options == "4":
                 shipment_update = input("How far is the shipment to the site?: ")
                 print(shipment_update)
