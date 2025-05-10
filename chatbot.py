@@ -1,4 +1,5 @@
 import smtplib
+import pandas as pd
 
 print("Welcome to Inventory Management Chatbot!")
 
@@ -7,6 +8,8 @@ ask = input("Do you have anything to request?: (y/n): ")
 
 inventory = {}
 
+#inventory_file = pd.DataFrame(inventory)
+
 # Options to choose for questioning
 while True:
     def question():
@@ -14,19 +17,17 @@ while True:
             options = input("What would you like help in?:\n 1. Add or Remove Inventory,\n 2. Request supplies to be sent over to a specific location,\n 3. If low on stock I can send a message to the manager to let him know,\n 4. Track incoming shipments: \n ")
             # Inventory view or changes
             if options == "1":
-                def add_remove():
-                    add_item = input("What would you like to add? (or type 'done'): ")
-                    while True:
-                        quantity = int(input(f"Type in how much would you like to add of the {add_item}?: "))
-                        if quantity < 0:
-                            print("We don't need a number less than zero please try again")
-                        else:
-                            break
+                    add_item = input("What would you like to add?: ")
+                    quantity = int(input(f"Type in how much would you like to add of the {add_item}?: "))
                     if add_item in inventory:
                         inventory[add_item] += quantity
+                        inventory.append({"name": add_item, "quantity": quantity})
                     else:
                         inventory[add_item] = quantity
-                        inventory.append({"name": add_item, "quantity": quantity})
+                    print(f"{quantity} {add_item}(s) has been added")
+
+                    remove_item = input("What would you like to remove?: ")
+                    quantity = int(input("How much would you like to remove?: "))
                 
             # Requesting supplies to a specific location
             elif options == "2":
