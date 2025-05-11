@@ -1,5 +1,4 @@
 import smtplib
-import pandas as pd
 
 print("Welcome to Inventory Management Chatbot!")
 
@@ -7,8 +6,6 @@ print("Welcome to Inventory Management Chatbot!")
 ask = input("Do you have anything to request?: (y/n): ")
 
 inventory = {}
-
-#inventory_file = pd.DataFrame(inventory)
 
 # Options to choose for questioning
 while True:
@@ -27,7 +24,12 @@ while True:
                     print(f"{quantity} {add_item}(s) has been added")
 
                     remove_item = input("What would you like to remove?: ")
-                    quantity = int(input("How much would you like to remove?: "))
+                    if remove_item in inventory:
+                        quantity = int(input("How much would you like to remove?: "))
+                        inventory[add_item] -= quantity
+                    else:
+                        inventory[add_item] = quantity
+                    print(f"You have {quantity} of {add_item}(s) left.")
                 
             # Requesting supplies to a specific location
             elif options == "2":
