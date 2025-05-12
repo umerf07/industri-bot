@@ -1,10 +1,12 @@
 import smtplib
+import csv
 
 print("Welcome to Inventory Management Chatbot!")
 
 # Chatbot Asking the question
 ask = input("Do you have anything to request?: (y/n): ")
 
+filename = "inventory.csv"
 inventory = {}
 
 # Options to choose for questioning
@@ -14,23 +16,38 @@ while True:
             options = input("What would you like help in?:\n 1. Add or Remove Inventory,\n 2. Request supplies to be sent over to a specific location,\n 3. If low on stock I can send a message to the manager to let him know,\n 4. Track incoming shipments: \n ")
             # Inventory view or changes
             if options == "1":
-                    add_item = input("What would you like to add?: ")
-                    quantity = int(input(f"Type in how much would you like to add of the {add_item}?: "))
-                    if add_item in inventory:
-                        inventory[add_item] += quantity
-                        inventory.append({"name": add_item, "quantity": quantity})
+                    global inventory
+                    item = input("What would you like to add?: ")
+                    quantity = int(input(f"Type in how much would you like to add of the {item}?: "))
+                    if item in inventory:
+                        inventory[item] += quantity
+                        inventory.append({"name": item, "quantity": quantity})
                     else:
-                        inventory[add_item] = quantity
-                    print(f"{quantity} {add_item}(s) has been added")
-
-                    remove_item = input("What would you like to remove?: ")
-                    if remove_item in inventory:
-                        quantity = int(input("How much would you like to remove?: "))
-                        inventory[add_item] -= quantity
-                    else:
-                        inventory[add_item] = quantity
-                    print(f"You have {quantity} of {add_item}(s) left.")
+                        inventory[item] = quantity
+                    print(f"{quantity} {item}(s) has been added")
+                    with open("inventory.csv", "w") as file:
+                        writer = csv.writer(file)
+                        writer.writerow(["item", "quantity"])
+                        for key, value in inventory.items():
+                            writer.writerow([key, value])
+                    
+                    print("Inventory updated")
                 
+                    item = input("What would you like to remove?: ")
+                    if item in inventory:
+                        quantity = int(input(f"How much would you like to remove the {item}?: "))
+                        inventory[item] -= quantity
+                    else:
+                        inventory[item] = quantity
+                    print(f"You have {quantity} of {item}(s) left.")
+                    with open("inventory.csv", "w", newline='') as file:
+                        writer = csv.writer(file)
+                        writer.writerow(["item", "quantity"])
+                        for key, value in inventory.items():
+                            writer.writerow([key, value])
+                    
+                    print("Inventory updated")
+
             # Requesting supplies to a specific location
             elif options == "2":
                 message = input("Where do you want to send the supplies and where to?: ")
