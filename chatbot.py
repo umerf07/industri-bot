@@ -1,4 +1,5 @@
 import smtplib
+from email.message import EmailMessage
 import csv
 
 print("Welcome to Inventory Management Chatbot!")
@@ -50,11 +51,27 @@ while True:
 
             # Requesting supplies to a specific location
             elif options == "2":
-                message = input("Where do you want to send the supplies and where to?: ")
-                print(message)
+                info = input("Where do you want to send the supplies and where to?: ")
+                print(info)
             # Low on Stock
             elif options == "3":
                 print("We're low on stock please contact the supply manager immediately!...")
+                email = input("SENDER EMAIL: ")
+                receiver_email = input("RECEIVER EMAIL: ")
+
+                subject = input("SUBJECT: ")
+                message = input("MESSAGE: ")
+
+                text = f"Subject: {subject}\n\n{message}"
+
+                server = smtplib.SMTP("smtp.gmail.com", 587)
+                server.starttls()
+
+                server.login(email, "xcjpniffepbiqfay")
+
+                server.sendmail(email, receiver_email, text)
+
+                print("Email has been sent to " + receiver_email)
             # Tracking ongoing shipment vice versa
             elif options == "4":
                 shipment_update = input("How far is the shipment to the site?: ")
